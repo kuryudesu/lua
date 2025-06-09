@@ -77,7 +77,7 @@ local function renderPoint(position)
         local finalPosition = groundPosition + (surfaceNormal * offsetAmount)
         
         image.CFrame = CFrame.fromMatrix(finalPosition, Vector3.new(1,0,0), surfaceNormal)
-        
+        print("PathIndicator Debug: Rendering point at", result.Position)
 		image.Parent = displayModel
 		table.insert(activeImages, image)
 	else
