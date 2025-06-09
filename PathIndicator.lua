@@ -55,14 +55,12 @@ end
 
 local function renderPoint(position)
 	local image = getImage()
-	if not image then
-		print("PathIndicator Debug: Image pool is empty!")
-		return
-	end
+	if not image then return end
 	
 	local rayParams = RaycastParams.new()
 	rayParams.FilterType = Enum.RaycastFilterType.Exclude
 	rayParams.FilterDescendantsInstances = {player.Character, displayModel}
+
 
 	local rayOrigin = position + Vector3.new(0, 50, 0)
 	local rayDirection = Vector3.new(0, -100, 0)
@@ -70,15 +68,19 @@ local function renderPoint(position)
 	local result = workspace:Raycast(rayOrigin, rayDirection, rayParams)
 	
 	if result and result.Position then
-		
-		print("PathIndicator Debug: Rendering point at", result.Position)
-		
-		image.CFrame = CFrame.new(result.Position)
-		image.Parent = displayModel 
+
+
+        local groundPosition = result.Position
+        local surfaceNormal = result.Normal
+        local offsetAmount = 0.5
+
+        local finalPosition = groundPosition + (surfaceNormal * offsetAmount)
+        
+        image.CFrame = CFrame.fromMatrix(finalPosition, Vector3.new(1,0,0), surfaceNormal)
+        
+		image.Parent = displayModel
 		table.insert(activeImages, image)
 	else
-		
-		print("PathIndicator Debug: Raycast from", rayOrigin, "missed the ground.")
 		returnImage(image)
 	end
 end
