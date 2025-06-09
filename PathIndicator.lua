@@ -61,30 +61,45 @@ local function renderPoint(position)
 	rayParams.FilterType = Enum.RaycastFilterType.Exclude
 	rayParams.FilterDescendantsInstances = {player.Character, displayModel}
 
-
 	local rayOrigin = position + Vector3.new(0, 50, 0)
 	local rayDirection = Vector3.new(0, -100, 0)
 	
 	local result = workspace:Raycast(rayOrigin, rayDirection, rayParams)
 	
 	if result and result.Position then
-
-
-        local groundPosition = result.Position
-        local surfaceNormal = result.Normal
+		local groundPosition = result.Position
+        local surfaceNormal = result.Normal 
         local offsetAmount = 4.5
-
         local finalPosition = groundPosition + (surfaceNormal * offsetAmount)
         
-        image.CFrame = CFrame.fromMatrix(finalPosition, Vector3.new(1,0,0), surfaceNormal)
-        print("PathIndicator Debug: Rendering point at", result.Position)
+
+        local worldUp = Vector3.new(0, 1, 0)
+        
+
+        local rightVector = surfaceNormal:Cross(worldUp)
+
+
+        if rightVector.Magnitude < 0.01 then
+            rightVector = Vector3.new(1, 0, 0)
+        end
+        
+
+        local lookVector = surfaceNormal:Cross(rightVector)
+
+
+        image.CFrame = CFrame.new(
+            finalPosition.X, finalPosition.Y, finalPosition.Z,
+            rightVector.X, surfaceNormal.X, -lookVector.X,
+            rightVector.Y, surfaceNormal.Y, -lookVector.Y,
+            rightVector.Z, surfaceNormal.Z, -lookVector.Z
+        )
+        
 		image.Parent = displayModel
 		table.insert(activeImages, image)
 	else
 		returnImage(image)
 	end
 end
-
 
 function PathIndicator.clear()
 	for _, image in ipairs(activeImages) do
