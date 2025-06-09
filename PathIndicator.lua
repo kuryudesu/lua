@@ -71,7 +71,7 @@ local function renderPoint(position)
         local surfaceNormal = result.Normal
 
         -- ⭐ 1. 增加抬升高度，讓它更明顯
-        local offsetAmount = 1.0 -- 將抬升高度增加到 1.0，你可以根據需要調整
+        local offsetAmount = 4.5 -- 將抬升高度增加到 1.0，你可以根據需要調整
         local finalPosition = groundPosition + (surfaceNormal * offsetAmount)
         
         -- ⭐ 2. 使用 CFrame.lookAt 來確保方向正確
@@ -83,9 +83,7 @@ local function renderPoint(position)
 		image.Parent = displayModel
 		table.insert(activeImages, image)
 
-        -- ⭐ 3. (可選的 Debug) 如果還是看不到，取消這段註釋
-        -- 這會在每個點的位置創建一個明亮的、可見的紅色小球，幫助我們確定位置是否正確
-        --[[
+
         local debugSphere = Instance.new("Part")
         debugSphere.Name = "DebugSphere"
         debugSphere.Shape = Enum.PartType.Ball
