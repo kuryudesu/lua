@@ -69,7 +69,7 @@ local function renderPoint(position)
 	if result and result.Position then
 		local groundPosition = result.Position
         local surfaceNormal = result.Normal 
-        local offsetAmount = 4.5
+        local offsetAmount = 10.0
         local finalPosition = groundPosition + (surfaceNormal * offsetAmount)
         
 
