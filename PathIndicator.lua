@@ -64,8 +64,8 @@ local function renderPoint(position)
 	rayParams.FilterType = Enum.RaycastFilterType.Exclude
 	rayParams.FilterDescendantsInstances = {player.Character, displayModel}
 
-	local rayOrigin = position + Vector3.new(0, 10, 0)
-	local rayDirection = Vector3.new(0, -20, 0)
+	local rayOrigin = position + Vector3.new(0, 50, 0)
+	local rayDirection = Vector3.new(0, -100, 0)
 	
 	local result = workspace:Raycast(rayOrigin, rayDirection, rayParams)
 	
