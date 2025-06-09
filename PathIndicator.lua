@@ -56,7 +56,7 @@ end
 local function renderPoint(position)
 	local image = getImage()
 	if not image then
-		print("PathIndicator Debug: Image pool is empty!") -- Debug 訊息
+		print("PathIndicator Debug: Image pool is empty!")
 		return
 	end
 	
@@ -78,7 +78,7 @@ local function renderPoint(position)
 		table.insert(activeImages, image)
 	else
 		
-		print("PathIndicator Debug: Raycast from", rayOrigin, "missed the ground.") -- Debug 訊息
+		print("PathIndicator Debug: Raycast from", rayOrigin, "missed the ground.")
 		returnImage(image)
 	end
 end
@@ -89,7 +89,6 @@ function PathIndicator.clear()
 		returnImage(image)
 	end
 	activeImages = {}
-	displayModel.Parent = nil
 end
 
 
