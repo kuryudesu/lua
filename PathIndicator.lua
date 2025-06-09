@@ -18,7 +18,7 @@ local function getImage()
 	if #imagePool > 0 then
 		return table.remove(imagePool, 1)
 	end
-	return nil -- 池已空
+	return nil 
 end
 
 
