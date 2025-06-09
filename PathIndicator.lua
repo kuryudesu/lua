@@ -54,7 +54,10 @@ end
 
 local function renderPoint(position)
 	local image = getImage()
-	if not image then return end
+	if not image then
+		print("PathIndicator Debug: Image pool is empty!") -- Debug 訊息
+		return
+	end
 	
 	local rayParams = RaycastParams.new()
 	rayParams.FilterType = Enum.RaycastFilterType.Exclude
@@ -66,55 +69,17 @@ local function renderPoint(position)
 	local result = workspace:Raycast(rayOrigin, rayDirection, rayParams)
 	
 	if result and result.Position then
+		
+		print("PathIndicator Debug: Rendering point at", result.Position)
+		
 		image.CFrame = CFrame.new(result.Position)
-		image.Parent = displayModel
+		image.Parent = displayModel -- ⭐ 確保這裡不是 adorneePart
 		table.insert(activeImages, image)
 	else
 		
+		print("PathIndicator Debug: Raycast from", rayOrigin, "missed the ground.") -- Debug 訊息
 		returnImage(image)
 	end
-end
-
-
-function PathIndicator.clear()
-	for _, image in ipairs(activeImages) do
-		returnImage(image)
-	end
-	activeImages = {}
-	displayModel.Parent = nil
-end
-
-
-function PathIndicator.render(waypoints)
-	PathIndicator.clear()
-
-	if not waypoints or #waypoints < 2 then
-		return 
-	end
-
-	displayModel.Parent = workspace 
-	
-	for i = 1, #waypoints - 1 do
-		local startPoint = waypoints[i].Position
-		local endPoint = waypoints[i+1].Position
-		local segmentVector = endPoint - startPoint
-		local segmentLength = segmentVector.Magnitude
-		
-
-		renderPoint(startPoint)
-
-
-		if segmentLength > SPACING then
-			local numPointsToInsert = math.floor(segmentLength / SPACING)
-			for j = 1, numPointsToInsert do
-				local interpolatedPosition = startPoint + (segmentVector.Unit * SPACING * j)
-				renderPoint(interpolatedPosition)
-			end
-		end
-	end
-
-
-	renderPoint(waypoints[#waypoints].Position)
 end
 
 return PathIndicator
