@@ -61,42 +61,27 @@ local function renderPoint(position)
 	rayParams.FilterType = Enum.RaycastFilterType.Exclude
 	rayParams.FilterDescendantsInstances = {player.Character, displayModel}
 
+
 	local rayOrigin = position + Vector3.new(0, 50, 0)
 	local rayDirection = Vector3.new(0, -100, 0)
 	
 	local result = workspace:Raycast(rayOrigin, rayDirection, rayParams)
 	
 	if result and result.Position then
-		local groundPosition = result.Position
-        local surfaceNormal = result.Normal
 
-        -- ⭐ 1. 增加抬升高度，讓它更明顯
-        local offsetAmount = 4.5 -- 將抬升高度增加到 1.0，你可以根據需要調整
+
+        local groundPosition = result.Position
+        local surfaceNormal = result.Normal
+        local offsetAmount = 4.0
+
+
         local finalPosition = groundPosition + (surfaceNormal * offsetAmount)
         
-        -- ⭐ 2. 使用 CFrame.lookAt 來確保方向正確
-        -- 第一個參數是圖片的位置 (finalPosition)
-        -- 第二個參數是圖片要"看向"的位置。讓它看向 "位置 + 法線方向"
-        -- 這樣圖片的正面就會總是朝外，與地面垂直。
-        image.CFrame = CFrame.lookAt(finalPosition, finalPosition + surfaceNormal)
+
+        image.CFrame = CFrame.fromMatrix(finalPosition, Vector3.new(1,0,0), surfaceNormal)
         
 		image.Parent = displayModel
 		table.insert(activeImages, image)
-
-
-        local debugSphere = Instance.new("Part")
-        debugSphere.Name = "DebugSphere"
-        debugSphere.Shape = Enum.PartType.Ball
-        debugSphere.Material = Enum.Material.Neon
-        debugSphere.Color = Color3.fromRGB(255, 0, 0)
-        debugSphere.Size = Vector3.new(1, 1, 1)
-        debugSphere.Anchored = true
-        debugSphere.CanCollide = false
-        debugSphere.Position = finalPosition
-        debugSphere.Parent = workspace
-        game.Debris:AddItem(debugSphere, 5) -- 5秒後自動刪除
-        --]]
-        
 	else
 		returnImage(image)
 	end
