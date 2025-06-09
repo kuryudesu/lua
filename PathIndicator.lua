@@ -1,8 +1,8 @@
 local PathIndicator = {}
 
 local SPACING = 4
-local IMAGE_URL = "rbxassetid://6960136893" 
-local IMAGE_SIZE = Vector2.new(3, 3)
+local IMAGE_URL = "rbxassetid://2529241017" 
+local IMAGE_SIZE = Vector2.new(4, 4)
 local IMAGE_COLOR = Color3.fromRGB(0, 255, 127) 
 local POOL_SIZE = 50 
 
