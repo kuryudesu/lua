@@ -1,3 +1,25 @@
+local PathIndicator = {}
+
+local SPACING = 4
+local IMAGE_URL = "rbxassetid://9133703399" 
+local IMAGE_SIZE = Vector2.new(3, 3)
+local IMAGE_COLOR = Color3.fromRGB(0, 255, 127) 
+local POOL_SIZE = 50 
+
+local player = game:GetService("Players").LocalPlayer
+local workspace = game:GetService("Workspace")
+
+local displayModel = Instance.new("Model")
+displayModel.Name = "PathIndicatorModel"
+
+local adorneePart = Instance.new("Part")
+adorneePart.Name = "PathAdornee"
+adorneePart.Size = Vector3.new(1, 1, 1)
+adorneePart.Transparency = 1
+adorneePart.Anchored = true
+adorneePart.CanCollide = false
+adorneePart.Parent = displayModel
+
 local imagePool = {} 
 local activeImages = {} 
 
