@@ -1,2 +1,2 @@
 # lua
-kuryu's Lua Library
+kuryu's Lua Library and script
